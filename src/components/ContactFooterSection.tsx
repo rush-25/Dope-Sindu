@@ -215,8 +215,19 @@ export function ContactFooterSection() {
             </button>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-[#B49A82]/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] tracking-[0.22em] text-[#D8C9B8]/55 uppercase">
+          <div className="mt-8 pt-6 border-t border-[#B49A82]/10 flex flex-col lg:flex-row items-center justify-between gap-4 text-center text-[11px] tracking-[0.22em] text-[#D8C9B8]/55 uppercase">
             <p>© 2026 Dope Sindu. All Rights Reserved.</p>
+            <p className="text-[#D8C9B8]/60">
+              Developed by:{' '}
+              <a
+                href="https://ceyloninnovation.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#B49A82] hover:text-[#D8C9B8] transition-colors underline underline-offset-4 decoration-[#B49A82]/35 hover:decoration-[#D8C9B8]"
+              >
+                Ceylon Innovation Services (PVT) LTD
+              </a>
+            </p>
             <p className="text-[#B49A82] tracking-[0.3em]">DRINK RESPONSIBLY.</p>
           </div>
         </footer>
