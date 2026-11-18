@@ -5,6 +5,9 @@
   "robots": {
     "index": true
   },
+  "icons": {
+    "icon": "/favicon.png"
+  },
   "openGraph": {
     "image": "/images/dopesindu/banner.webp"
   },
