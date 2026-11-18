@@ -179,6 +179,7 @@ export function GallerySection() {
             role="dialog"
             aria-modal="true"
             aria-label={activePhoto.title}
+            onClick={closeLightbox}
             className="fixed inset-0 z-50 h-[100dvh] overflow-hidden touch-none overscroll-none bg-[#17151B]/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8"
           >
             {/* Top Controls */}
@@ -201,7 +202,10 @@ export function GallerySection() {
             <div className="relative flex-1 flex items-center justify-center max-w-6xl w-full mx-auto my-4 min-h-0">
               <button
                 type="button"
-                onClick={showPrev}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showPrev();
+                }}
                 aria-label="Previous photograph"
                 className="hidden sm:flex items-center justify-center w-12 h-12 rounded-full border border-[#B49A82]/30 bg-[#29232B]/70 text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors mr-4 shrink-0 cursor-pointer"
               >
@@ -224,7 +228,8 @@ export function GallerySection() {
                     showPrev();
                   }
                 }}
-                className="relative max-h-[72vh] w-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
+                onClick={(e) => e.stopPropagation()}
+                className="relative max-h-[72vh] w-fit max-w-full mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
               >
                 <img
                   src={activePhoto.src}
@@ -236,7 +241,10 @@ export function GallerySection() {
 
               <button
                 type="button"
-                onClick={showNext}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showNext();
+                }}
                 aria-label="Next photograph"
                 className="hidden sm:flex items-center justify-center w-12 h-12 rounded-full border border-[#B49A82]/30 bg-[#29232B]/70 text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors ml-4 shrink-0 cursor-pointer"
               >
@@ -248,14 +256,20 @@ export function GallerySection() {
             <div className="max-w-6xl w-full mx-auto flex items-center justify-between gap-3">
               <button
                 type="button"
-                onClick={showPrev}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showPrev();
+                }}
                 aria-label="Previous photograph"
                 className="flex sm:hidden items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors shrink-0 cursor-pointer"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex-1 min-w-0 text-center sm:text-left">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 min-w-0 text-center sm:text-left"
+              >
                 <p className="text-[10px] sm:text-[11px] tracking-[0.22em] sm:tracking-[0.26em] uppercase text-[#B49A82] truncate">
                   {activePhoto.subtitle}
                 </p>
@@ -266,7 +280,10 @@ export function GallerySection() {
 
               <button
                 type="button"
-                onClick={showNext}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showNext();
+                }}
                 aria-label="Next photograph"
                 className="flex sm:hidden items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors shrink-0 cursor-pointer"
               >
