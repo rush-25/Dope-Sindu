@@ -1,0 +1,15 @@
+{
+  "title": "Dope Sindu (ඩෝප් සිංදු) — Live Acoustic Band | Chilaw, Sri Lanka",
+  "description": "Official website of Dope Sindu (ඩෝප් සිංදු), a Sri Lankan live acoustic collective from Chilaw bringing timeless golden oldies, Sri Lankan classics, and baila back to life.",
+  "language": "en",
+  "robots": {
+    "index": true
+  },
+  "openGraph": {
+    "image": "/images/dopesindu/banner.webp"
+  },
+  "accessibility": {
+    "addBypassLinks": true,
+    "ignoreReducedMotion": false
+  }
+}

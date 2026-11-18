@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-plum-950: #17151B;
+  --color-plum-900: #201C24;
+  --color-charcoal-800: #29232B;
+  --color-burgundy-700: #50363F;
+  --color-rose-500: #96777B;
+  --color-champagne-400: #B49A82;
+  --color-ivory-200: #D8C9B8;
+
+  --font-serif-luxury: 'Cormorant Garamond', Georgia, serif;
+  --font-sans-modern: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display-bold: 'Bebas Neue', Impact, sans-serif;
+  --font-sinhala: 'Noto Sans Sinhala', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #17151B;
+    color: #D8C9B8;
+    font-family: var(--font-sans-modern);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: #17151B;
+    color: #D8C9B8;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgba(180, 154, 130, 0.28);
+    color: #D8C9B8;
+  }
+}
+
+/* Subtle film grain overlay for vintage concert atmosphere */
+.vintage-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* Art Deco hairline divider */
+.deco-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(180, 154, 130, 0.35) 25%,
+    rgba(180, 154, 130, 0.6) 50%,
+    rgba(180, 154, 130, 0.35) 75%,
+    transparent 100%
+  );
+}
+
+/* Vinyl spin animation */
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vinyl-slow {
+  animation: vinyl-spin 22s linear infinite;
+}
+
+/* Soundwave bars */
+@keyframes wave-pulse {
+  0%, 100% {
+    transform: scaleY(0.32);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 0.9;
+  }
+}
+
+.wave-bar {
+  transform-origin: bottom;
+  animation: wave-pulse 1.8s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #17151B;
+}
+::-webkit-scrollbar-thumb {
+  background: #50363F;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #96777B;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-vinyl-slow,
+  .wave-bar {
+    animation: none !important;
+  }
+}
