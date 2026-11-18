@@ -39,10 +39,10 @@ function EditorialPhotoCard({ photo, index, onOpen }: TiltCardProps) {
       onClick={() => onOpen(index)}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className={`gallery-card group relative w-full text-left overflow-hidden rounded-2xl bg-[#29232B] border border-[#B49A82]/20 transition-all duration-500 ease-out hover:border-[#B49A82]/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer ${photo.layoutClass}`}
+      className={`gallery-card group relative block w-full h-full text-left overflow-hidden rounded-2xl bg-[#29232B] border border-[#B49A82]/20 transition-all duration-500 ease-out hover:border-[#B49A82]/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer ${photo.layoutClass}`}
       style={{ willChange: 'transform' }}
     >
-      <div className={`relative w-full overflow-hidden ${photo.aspectClass}`}>
+      <div className={`relative w-full h-full overflow-hidden ${photo.aspectClass}`}>
         <img
           src={photo.src}
           alt={photo.alt}
