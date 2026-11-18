@@ -8,7 +8,14 @@ interface VinylStage3DProps {
 
 export function VinylStage3D({ className = '' }: VinylStage3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const spinBoostRef = useRef(0);
+  const flipTargetRef = useRef(0);
   const [webglSupported, setWebglSupported] = useState(true);
+
+  const triggerSpin = () => {
+    spinBoostRef.current = Math.min(spinBoostRef.current + 12, 24);
+    flipTargetRef.current += Math.PI * 2;
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -222,17 +229,30 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     resizeObserver.observe(container);
 
     let animationId = 0;
+    let spinAngle = 0;
+    let flipAngle = 0;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const delta = Math.min(clock.getDelta(), 0.05);
+      const elapsed = clock.elapsedTime;
 
       if (!prefersReducedMotion) {
+        // Decay click-triggered spin boost smoothly (turntable inertia)
+        spinBoostRef.current *= Math.pow(0.28, delta);
+        if (spinBoostRef.current < 0.01) spinBoostRef.current = 0;
+
+        const angularSpeed = 0.45 + spinBoostRef.current;
+        spinAngle += angularSpeed * delta;
+
         // Smooth vinyl rotation
-        discMesh.rotation.y = elapsed * 0.45;
-        labelMesh.rotation.z = -elapsed * 0.45;
-        labelBack.rotation.z = elapsed * 0.45;
+        discMesh.rotation.y = spinAngle;
+        labelMesh.rotation.z = -spinAngle;
+        labelBack.rotation.z = spinAngle;
+
+        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.05);
+        vinylGroup.scale.setScalar(scaleBoost);
 
         // Subtle floating bob
         vinylGroup.position.y = Math.sin(elapsed * 0.9) * 0.04;
@@ -241,9 +261,12 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
         mouse.x += (mouse.targetX - mouse.x) * 0.06;
         mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
+        // Smooth 3D flip rotation on click
+        flipAngle += (flipTargetRef.current - flipAngle) * Math.min(1, delta * 5.5);
+
         const scrollFactor = Math.min(window.scrollY / 900, 1);
         vinylGroup.rotation.x = mouse.y * 0.22 + scrollFactor * 0.25;
-        vinylGroup.rotation.y = mouse.x * 0.28 - scrollFactor * 0.2;
+        vinylGroup.rotation.y = flipAngle + mouse.x * 0.28 - scrollFactor * 0.2;
 
         particles.rotation.y = elapsed * 0.03;
         particles.position.y = Math.sin(elapsed * 0.4) * 0.12;
@@ -300,8 +323,17 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
   return (
     <div
       ref={containerRef}
-      aria-hidden="true"
-      className={`pointer-events-none select-none ${className}`}
+      role="button"
+      tabIndex={0}
+      aria-label="Spin vinyl record"
+      onClick={triggerSpin}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerSpin();
+        }
+      }}
+      className={`cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded-full ${className}`}
     />
   );
 }
