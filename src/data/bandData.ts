@@ -16,6 +16,12 @@ export const BAND_ASSETS = {
   aboutSecondary: '/images/dopesindu/acoustic-duo.webp',
 };
 
+export const WHATSAPP_CONTACT = {
+  // Replace with your WhatsApp number in international format without '+' or spaces (e.g., 94771234567)
+  phoneNumber: '94770000000',
+  message: 'Hi Dope Sindu! I would like to inquire about booking / collaborating with the band.',
+};
+
 export const SOCIAL_LINKS = [
   {
     id: 'youtube',

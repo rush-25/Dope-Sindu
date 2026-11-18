@@ -82,6 +82,26 @@
   }
 }
 
+/* WhatsApp button blink (opaque -> transparent -> opaque) */
+@keyframes whatsapp-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-whatsapp-blink {
+  animation: whatsapp-blink 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-whatsapp-blink {
+    animation: none;
+  }
+}
+
 .wave-bar {
   transform-origin: bottom;
   animation: wave-pulse 1.8s ease-in-out infinite;

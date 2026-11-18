@@ -3,6 +3,7 @@ import { HeroSection } from './components/HeroSection';
 import { GallerySection } from './components/GallerySection';
 import { AboutSection } from './components/AboutSection';
 import { ContactFooterSection } from './components/ContactFooterSection';
+import { WhatsAppButton } from './components/WhatsAppButton';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <AboutSection />
         <ContactFooterSection />
       </main>
+      <WhatsAppButton />
     </div>
   );
 }
