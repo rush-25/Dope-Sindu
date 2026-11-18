@@ -9,7 +9,7 @@
     "icon": "/favicon.png"
   },
   "openGraph": {
-    "image": "/images/dopesindu/banner.webp"
+    "image": "https://dope-sindu.vercel.app/og-icon.png"
   },
   "accessibility": {
     "addBypassLinks": true,

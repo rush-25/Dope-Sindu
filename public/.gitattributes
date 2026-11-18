@@ -1,3 +1,4 @@
 # AgentPlat packages this default favicon directly from source without LFS hydration.
 favicon.png -filter -diff -merge -text
+og-icon.png -filter -diff -merge -text
 *.webp -filter -diff -merge -text
