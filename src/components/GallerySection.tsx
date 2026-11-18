@@ -111,10 +111,12 @@ export function GallerySection() {
       if (e.key === 'ArrowRight') showNext();
     };
 
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -177,7 +179,7 @@ export function GallerySection() {
             role="dialog"
             aria-modal="true"
             aria-label={activePhoto.title}
-            className="fixed inset-0 z-50 bg-[#17151B]/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8"
+            className="fixed inset-0 z-50 h-[100dvh] overflow-hidden touch-none overscroll-none bg-[#17151B]/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8"
           >
             {/* Top Controls */}
             <div className="flex items-center justify-between max-w-6xl w-full mx-auto">
@@ -212,12 +214,23 @@ export function GallerySection() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                className="relative max-h-[72vh] w-full flex items-center justify-center"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.22}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -50 || info.velocity.x < -300) {
+                    showNext();
+                  } else if (info.offset.x > 50 || info.velocity.x > 300) {
+                    showPrev();
+                  }
+                }}
+                className="relative max-h-[72vh] w-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
               >
                 <img
                   src={activePhoto.src}
                   alt={activePhoto.alt}
-                  className="max-h-[72vh] max-w-full w-auto object-contain rounded-xl border border-[#B49A82]/25 shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
+                  draggable={false}
+                  className="max-h-[72vh] max-w-full w-auto object-contain rounded-xl border border-[#B49A82]/25 shadow-[0_24px_80px_rgba(0,0,0,0.65)] pointer-events-none select-none"
                 />
               </motion.div>
 
@@ -231,35 +244,34 @@ export function GallerySection() {
               </button>
             </div>
 
-            {/* Bottom Caption + Mobile Navigation */}
-            <div className="max-w-6xl w-full mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-center sm:text-left">
-                <p className="text-[11px] tracking-[0.26em] uppercase text-[#B49A82]">
+            {/* Bottom Caption + Mobile Side Navigation */}
+            <div className="max-w-6xl w-full mx-auto flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={showPrev}
+                aria-label="Previous photograph"
+                className="flex sm:hidden items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors shrink-0 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <div className="flex-1 min-w-0 text-center sm:text-left">
+                <p className="text-[10px] sm:text-[11px] tracking-[0.22em] sm:tracking-[0.26em] uppercase text-[#B49A82] truncate">
                   {activePhoto.subtitle}
                 </p>
-                <h3 className="font-[family-name:var(--font-serif-luxury)] text-2xl sm:text-3xl text-[#D8C9B8]">
+                <h3 className="font-[family-name:var(--font-serif-luxury)] text-xl sm:text-3xl text-[#D8C9B8] truncate">
                   {activePhoto.title}
                 </h3>
               </div>
 
-              <div className="flex sm:hidden items-center gap-4">
-                <button
-                  type="button"
-                  onClick={showPrev}
-                  aria-label="Previous photograph"
-                  className="p-3 rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8]"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={showNext}
-                  aria-label="Next photograph"
-                  className="p-3 rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8]"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={showNext}
+                aria-label="Next photograph"
+                className="flex sm:hidden items-center justify-center min-w-[44px] min-h-[44px] rounded-full border border-[#B49A82]/35 bg-[#29232B] text-[#D8C9B8] hover:text-[#B49A82] hover:border-[#B49A82] transition-colors shrink-0 cursor-pointer"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
           </motion.div>
         )}
