@@ -28,7 +28,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     try {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: !isMobile,
+        antialias: true,
         powerPreference: 'high-performance',
       });
     } catch {
@@ -40,7 +40,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     const height = container.clientHeight || 400;
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     container.appendChild(renderer.domElement);
@@ -114,7 +114,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     grooveTexture.anisotropy = 4;
 
     // Main Vinyl Disc (clearcoat physical material for authentic glossy LP look)
-    const discGeometry = new THREE.CylinderGeometry(1.75, 1.75, 0.036, 72);
+    const discGeometry = new THREE.CylinderGeometry(1.75, 1.75, 0.036, 128);
     const discMaterial = new THREE.MeshPhysicalMaterial({
       color: 0x26212c,
       map: grooveTexture,
@@ -130,7 +130,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     vinylGroup.add(discMesh);
 
     // Champagne Outer Rim
-    const rimGeometry = new THREE.TorusGeometry(1.75, 0.016, 16, 96);
+    const rimGeometry = new THREE.TorusGeometry(1.75, 0.016, 20, 128);
     const rimMaterial = new THREE.MeshStandardMaterial({
       color: 0xcab199,
       roughness: 0.26,
@@ -140,7 +140,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     vinylGroup.add(rimMesh);
 
     // Inner Champagne Hairline Ring
-    const innerRingGeo = new THREE.TorusGeometry(0.66, 0.011, 12, 64);
+    const innerRingGeo = new THREE.TorusGeometry(0.66, 0.011, 16, 96);
     const innerRingMesh = new THREE.Mesh(innerRingGeo, rimMaterial);
     innerRingMesh.position.z = 0.02;
     vinylGroup.add(innerRingMesh);
@@ -149,8 +149,9 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     const textureLoader = new THREE.TextureLoader();
     const logoTexture = textureLoader.load(BAND_ASSETS.logo);
     logoTexture.colorSpace = THREE.SRGBColorSpace;
+    logoTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 
-    const labelGeometry = new THREE.CircleGeometry(0.64, 48);
+    const labelGeometry = new THREE.CircleGeometry(0.64, 96);
     const labelMaterial = new THREE.MeshStandardMaterial({
       map: logoTexture,
       emissive: 0xffffff,
