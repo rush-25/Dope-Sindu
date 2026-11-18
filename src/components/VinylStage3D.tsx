@@ -40,7 +40,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
-    camera.position.set(0, 0.2, 6.2);
+    camera.position.set(0, 0, 6.2);
 
     // Lighting: Warm champagne key, dusty rose rim, and studio fill so grooves & label pop
     const ambientLight = new THREE.AmbientLight(0xd8c9b8, 0.75);
@@ -58,10 +58,10 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     warmAccent.position.set(2.8, 2.2, 3.5);
     scene.add(warmAccent);
 
-    // Vinyl Group
+    // Vinyl Group — centered & straight-on at rest
     const vinylGroup = new THREE.Group();
-    vinylGroup.rotation.x = 0.42;
-    vinylGroup.rotation.y = -0.28;
+    vinylGroup.rotation.x = 0;
+    vinylGroup.rotation.y = 0;
     scene.add(vinylGroup);
 
     // Procedural Vinyl Groove Color + Bump Texture (anisotropic sheen + track bands)
@@ -194,15 +194,19 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // Mouse & Scroll tracking
+    // Mouse & Scroll tracking (centered when cursor is at viewport center)
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const handlePointerMove = (e: PointerEvent) => {
       if (prefersReducedMotion || isMobile) return;
-      const rect = container.getBoundingClientRect();
-      mouse.targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      mouse.targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      mouse.targetX = Math.max(-1, Math.min(1, (e.clientX / window.innerWidth - 0.5) * 2));
+      mouse.targetY = Math.max(-1, Math.min(1, (e.clientY / window.innerHeight - 0.5) * 2));
+    };
+    const handlePointerLeave = () => {
+      mouse.targetX = 0;
+      mouse.targetY = 0;
     };
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    document.addEventListener('pointerleave', handlePointerLeave);
 
     const handleResize = () => {
       if (!container) return;
@@ -231,15 +235,15 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
         labelBack.rotation.z = elapsed * 0.45;
 
         // Subtle floating bob
-        vinylGroup.position.y = Math.sin(elapsed * 0.9) * 0.09;
+        vinylGroup.position.y = Math.sin(elapsed * 0.9) * 0.04;
 
         // Smooth mouse interpolation
-        mouse.x += (mouse.targetX - mouse.x) * 0.04;
-        mouse.y += (mouse.targetY - mouse.y) * 0.04;
+        mouse.x += (mouse.targetX - mouse.x) * 0.06;
+        mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
         const scrollFactor = Math.min(window.scrollY / 900, 1);
-        vinylGroup.rotation.x = 0.42 + mouse.y * 0.18 + scrollFactor * 0.25;
-        vinylGroup.rotation.y = -0.28 + mouse.x * 0.24 - scrollFactor * 0.2;
+        vinylGroup.rotation.x = mouse.y * 0.22 + scrollFactor * 0.25;
+        vinylGroup.rotation.y = mouse.x * 0.28 - scrollFactor * 0.2;
 
         particles.rotation.y = elapsed * 0.03;
         particles.position.y = Math.sin(elapsed * 0.4) * 0.12;
@@ -252,6 +256,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('resize', handleResize);
       resizeObserver.disconnect();
 

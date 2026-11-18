@@ -182,7 +182,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom Bar: Decorative Soundwave & Custom Scroll Indicator */}
+      {/* Bottom Bar: Decorative Soundwave */}
       <div className="relative z-10 max-w-7xl w-full mx-auto flex items-end justify-between gap-4 pt-4 border-t border-[#B49A82]/15 hero-stagger">
         {/* Animated Decorative Sound Wave */}
         <div className="flex items-end gap-1.5 h-7" aria-hidden="true">
@@ -200,18 +200,6 @@ export function HeroSection() {
             Golden Oldies • Baila • Acoustic
           </span>
         </div>
-
-        {/* Scroll Down Indicator */}
-        <button
-          type="button"
-          onClick={() => scrollTo('photos')}
-          className="group flex items-center gap-2.5 sm:gap-3 min-h-[44px] text-[10px] sm:text-[11px] tracking-[0.22em] sm:tracking-[0.26em] uppercase text-[#D8C9B8]/70 hover:text-[#B49A82] transition-colors cursor-pointer"
-        >
-          <span>Scroll to Explore</span>
-          <span className="relative flex items-center justify-center w-7 h-11 rounded-full border border-[#B49A82]/35 group-hover:border-[#B49A82] transition-colors">
-            <span className="w-1 h-2 rounded-full bg-[#B49A82] animate-bounce" />
-          </span>
-        </button>
       </div>
     </section>
   );
