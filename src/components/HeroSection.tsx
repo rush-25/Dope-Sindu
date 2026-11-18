@@ -159,15 +159,6 @@ export function HeroSection() {
               aria-hidden="true"
               className="absolute inset-8 rounded-full bg-gradient-to-tr from-[#50363F]/45 via-[#B49A82]/15 to-transparent blur-2xl pointer-events-none"
             />
-            {/* Art Deco Halo Rings */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-4 rounded-full border border-[#B49A82]/25 pointer-events-none"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-10 rounded-full border border-[#96777B]/25 pointer-events-none"
-            />
 
             <VinylStage3D className="w-full h-full" />
 

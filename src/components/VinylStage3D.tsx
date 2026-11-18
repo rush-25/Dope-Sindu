@@ -333,7 +333,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
           triggerSpin();
         }
       }}
-      className={`cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded-full ${className}`}
+      className={`cursor-pointer select-none focus:outline-none ${className}`}
     />
   );
 }
