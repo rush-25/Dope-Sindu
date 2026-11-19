@@ -40,7 +40,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     const height = container.clientHeight || 400;
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     container.appendChild(renderer.domElement);
@@ -71,40 +71,44 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     vinylGroup.rotation.y = 0;
     scene.add(vinylGroup);
 
-    // Procedural Vinyl Groove Color + Bump Texture (anisotropic sheen + track bands)
+    // Procedural Vinyl Groove Color + Bump Texture (lighter 512px on mobile for fast Safari GPU upload)
+    const texSize = isMobile ? 512 : 1024;
     const grooveCanvas = document.createElement('canvas');
-    grooveCanvas.width = 1024;
-    grooveCanvas.height = 1024;
+    grooveCanvas.width = texSize;
+    grooveCanvas.height = texSize;
     const ctx = grooveCanvas.getContext('2d');
     if (ctx) {
-      const cx = 512;
-      const cy = 512;
+      const cx = texSize / 2;
+      const cy = texSize / 2;
+      const scale = texSize / 1024;
       ctx.fillStyle = '#1c1822';
-      ctx.fillRect(0, 0, 1024, 1024);
+      ctx.fillRect(0, 0, texSize, texSize);
 
       // Subtle radial anisotropic light reflection (classic vinyl V-sheen)
-      const sheenGrad = ctx.createConicGradient(0.4, cx, cy);
-      sheenGrad.addColorStop(0.0, 'rgba(216, 201, 184, 0.16)');
-      sheenGrad.addColorStop(0.12, 'rgba(23, 21, 27, 0.0)');
-      sheenGrad.addColorStop(0.38, 'rgba(23, 21, 27, 0.0)');
-      sheenGrad.addColorStop(0.5, 'rgba(180, 154, 130, 0.18)');
-      sheenGrad.addColorStop(0.62, 'rgba(23, 21, 27, 0.0)');
-      sheenGrad.addColorStop(0.88, 'rgba(23, 21, 27, 0.0)');
-      sheenGrad.addColorStop(1.0, 'rgba(216, 201, 184, 0.16)');
-      ctx.fillStyle = sheenGrad;
-      ctx.fillRect(0, 0, 1024, 1024);
+      if (typeof ctx.createConicGradient === 'function') {
+        const sheenGrad = ctx.createConicGradient(0.4, cx, cy);
+        sheenGrad.addColorStop(0.0, 'rgba(216, 201, 184, 0.16)');
+        sheenGrad.addColorStop(0.12, 'rgba(23, 21, 27, 0.0)');
+        sheenGrad.addColorStop(0.38, 'rgba(23, 21, 27, 0.0)');
+        sheenGrad.addColorStop(0.5, 'rgba(180, 154, 130, 0.18)');
+        sheenGrad.addColorStop(0.62, 'rgba(23, 21, 27, 0.0)');
+        sheenGrad.addColorStop(0.88, 'rgba(23, 21, 27, 0.0)');
+        sheenGrad.addColorStop(1.0, 'rgba(216, 201, 184, 0.16)');
+        ctx.fillStyle = sheenGrad;
+        ctx.fillRect(0, 0, texSize, texSize);
+      }
 
-      for (let r = 178; r < 500; r += 3) {
+      for (let r = 178; r < 500; r += isMobile ? 5 : 3) {
         const isTrackGap = r === 265 || r === 355 || r === 438;
         ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.arc(cx, cy, r * scale, 0, Math.PI * 2);
         if (isTrackGap) {
           ctx.strokeStyle = 'rgba(180, 154, 130, 0.35)';
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 2 * scale;
         } else {
           ctx.strokeStyle =
             r % 6 === 0 ? 'rgba(180, 154, 130, 0.22)' : 'rgba(16, 13, 20, 0.9)';
-          ctx.lineWidth = 1.2;
+          ctx.lineWidth = 1.2 * scale;
         }
         ctx.stroke();
       }

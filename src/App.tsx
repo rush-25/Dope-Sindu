@@ -1,10 +1,18 @@
+import { lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { GallerySection } from './components/GallerySection';
-import { AboutSection } from './components/AboutSection';
-import { ContactFooterSection } from './components/ContactFooterSection';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
+
+const GallerySection = lazy(() =>
+  import('./components/GallerySection').then((m) => ({ default: m.GallerySection }))
+);
+const AboutSection = lazy(() =>
+  import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
+);
+const ContactFooterSection = lazy(() =>
+  import('./components/ContactFooterSection').then((m) => ({ default: m.ContactFooterSection }))
+);
 
 export default function App() {
   return (
@@ -12,9 +20,11 @@ export default function App() {
       <Navbar />
       <main>
         <HeroSection />
-        <GallerySection />
-        <AboutSection />
-        <ContactFooterSection />
+        <Suspense fallback={<div className="min-h-[40vh] bg-[#17151B]" />}>
+          <GallerySection />
+          <AboutSection />
+          <ContactFooterSection />
+        </Suspense>
       </main>
       <BackgroundMusicPlayer />
       <WhatsAppButton />

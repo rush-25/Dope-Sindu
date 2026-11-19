@@ -47,7 +47,7 @@ export function ContactFooterSection() {
       {/* Subtle Atmospheric Overlays */}
       <div
         aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[680px] h-[340px] rounded-full bg-[#B49A82]/10 blur-[140px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[680px] h-[340px] rounded-full bg-[radial-gradient(circle,rgba(180,154,130,0.14)_0%,transparent_70%)] pointer-events-none"
       />
       <div aria-hidden="true" className="absolute inset-0 vintage-grain pointer-events-none" />
 

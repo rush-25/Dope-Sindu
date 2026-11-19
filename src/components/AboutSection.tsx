@@ -19,11 +19,11 @@ export function AboutSection() {
       {/* Atmospheric Dusty Burgundy & Plum Glow */}
       <div
         aria-hidden="true"
-        className="absolute -top-24 right-0 w-[520px] h-[520px] rounded-full bg-[#50363F]/35 blur-[150px] pointer-events-none"
+        className="absolute -top-24 right-0 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(80,54,63,0.42)_0%,transparent_70%)] pointer-events-none"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-full bg-[#17151B]/65 blur-[120px] pointer-events-none"
+        className="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-full bg-[radial-gradient(circle,rgba(23,21,27,0.75)_0%,transparent_70%)] pointer-events-none"
       />
       <div aria-hidden="true" className="absolute inset-0 vintage-grain pointer-events-none" />
 

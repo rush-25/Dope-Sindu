@@ -43,7 +43,7 @@ export function BackgroundMusicPlayer() {
 
   return (
     <>
-      <audio ref={audioRef} src="/assets/music/background.mp3" loop preload="metadata" />
+      <audio ref={audioRef} src="/assets/music/background.mp3" loop preload="none" />
 
       <button
         type="button"

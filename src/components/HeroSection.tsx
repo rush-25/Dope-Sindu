@@ -1,8 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowDownRight, ArrowUpRight, Disc3 } from 'lucide-react';
 import { BAND_ASSETS } from '../data/bandData';
-import { VinylStage3D } from './VinylStage3D';
+
+const VinylStage3D = lazy(() =>
+  import('./VinylStage3D').then((m) => ({ default: m.VinylStage3D }))
+);
+
+function VinylFallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
+      <div className="w-[74%] h-[74%] rounded-full bg-[#1C1822] border border-[#B49A82]/40 shadow-2xl flex items-center justify-center animate-vinyl-slow">
+        <div className="w-[36%] h-[36%] rounded-full overflow-hidden border border-[#B49A82]/60 bg-[#17151B]">
+          <img
+            src={BAND_ASSETS.logo}
+            alt=""
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -60,6 +80,8 @@ export function HeroSection() {
         <img
           src={BAND_ASSETS.heroStage}
           alt="Dope Sindu live acoustic performance"
+          decoding="async"
+          fetchPriority="high"
           className="w-full h-full object-cover object-center opacity-45 scale-105 filter saturate-[0.82] contrast-[1.06]"
         />
       </div>
@@ -74,14 +96,14 @@ export function HeroSection() {
         className="absolute inset-0 z-0 bg-gradient-to-t from-[#17151B] via-[#17151B]/45 to-[#17151B]/70"
       />
 
-      {/* Warm Champagne Ambient Light Reflection */}
+      {/* Warm Champagne Ambient Light Reflection (radial gradient — zero blur filter cost on mobile Safari) */}
       <div
         aria-hidden="true"
-        className="absolute -top-32 right-1/4 w-[520px] h-[520px] rounded-full bg-[#B49A82]/10 blur-[140px] pointer-events-none z-0"
+        className="absolute -top-32 right-1/4 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(180,154,130,0.14)_0%,transparent_70%)] pointer-events-none z-0"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-1/3 w-[440px] h-[440px] rounded-full bg-[#50363F]/35 blur-[130px] pointer-events-none z-0"
+        className="absolute bottom-0 left-1/3 w-[440px] h-[440px] rounded-full bg-[radial-gradient(circle,rgba(80,54,63,0.42)_0%,transparent_70%)] pointer-events-none z-0"
       />
 
       {/* Subtle Vintage Film Grain */}
@@ -160,7 +182,9 @@ export function HeroSection() {
               className="absolute inset-8 rounded-full bg-gradient-to-tr from-[#50363F]/45 via-[#B49A82]/15 to-transparent blur-2xl pointer-events-none"
             />
 
-            <VinylStage3D className="w-full h-full" />
+            <Suspense fallback={<VinylFallback />}>
+              <VinylStage3D className="w-full h-full" />
+            </Suspense>
 
             {/* Subtle Editorial Floating Caption */}
             <div className="absolute bottom-3 right-2 sm:right-6 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#17151B]/80 backdrop-blur-md border border-[#B49A82]/25">

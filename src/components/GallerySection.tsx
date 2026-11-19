@@ -47,6 +47,7 @@ function EditorialPhotoCard({ photo, index, onOpen }: TiltCardProps) {
           src={photo.src}
           alt={photo.alt}
           loading={index < 2 ? 'eager' : 'lazy'}
+          decoding="async"
           className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.06] filter saturate-[0.9] contrast-[1.03] group-hover:saturate-100"
         />
 
@@ -133,7 +134,7 @@ export function GallerySection() {
       {/* Subtle Ambient Glow */}
       <div
         aria-hidden="true"
-        className="absolute top-1/4 left-0 w-[420px] h-[420px] rounded-full bg-[#50363F]/20 blur-[140px] pointer-events-none"
+        className="absolute top-1/4 left-0 w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle,rgba(80,54,63,0.28)_0%,transparent_70%)] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto">
