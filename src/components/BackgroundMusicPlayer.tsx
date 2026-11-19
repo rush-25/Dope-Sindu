@@ -51,7 +51,7 @@ export function BackgroundMusicPlayer() {
         aria-pressed={isPlaying}
         aria-label={isPlaying ? 'Pause background music' : 'Play background music'}
         title={isPlaying ? 'Pause background music' : 'Play background music'}
-        className="fixed bottom-5 left-5 sm:bottom-7 sm:left-7 z-40 inline-flex items-center gap-2.5 min-h-[44px] px-4 py-2.5 rounded-full bg-[#29232B]/85 hover:bg-[#50363F]/85 backdrop-blur-xl border border-[#B49A82]/35 hover:border-[#B49A82]/70 text-[#D8C9B8] shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-300 hover:scale-[1.03] active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer"
+        className="fixed bottom-5 left-5 sm:bottom-7 sm:left-7 z-40 inline-flex items-center gap-2.5 min-h-[44px] px-3.5 sm:px-4 py-2 rounded-full bg-[#17151B]/15 hover:bg-[#29232B]/40 backdrop-blur-3xl border border-[#B49A82]/25 hover:border-[#B49A82]/55 text-[#D8C9B8] shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-[1.03] active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer"
       >
         <span className="w-7 h-7 rounded-full bg-[#B49A82] text-[#17151B] flex items-center justify-center shrink-0">
           {isPlaying ? (
