@@ -4,6 +4,7 @@ import { GallerySection } from './components/GallerySection';
 import { AboutSection } from './components/AboutSection';
 import { ContactFooterSection } from './components/ContactFooterSection';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <AboutSection />
         <ContactFooterSection />
       </main>
+      <BackgroundMusicPlayer />
       <WhatsAppButton />
     </div>
   );

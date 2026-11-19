@@ -2,3 +2,4 @@
 favicon.png -filter -diff -merge -text
 og-icon.png -filter -diff -merge -text
 *.webp -filter -diff -merge -text
+*.mp3 -filter -diff -merge -text
