@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowDownRight, ArrowUpRight, Disc3 } from 'lucide-react';
-import { BAND_ASSETS } from '../data/bandData';
+import { BAND_ASSETS } from '../../data/bandData';
 
 const VinylStage3D = lazy(() =>
   import('./VinylStage3D').then((m) => ({ default: m.VinylStage3D }))

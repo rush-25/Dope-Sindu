@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUp, ArrowUpRight, Mail, Phone, Sparkles } from 'lucide-react';
-import { BAND_ASSETS, SOCIAL_LINKS } from '../data/bandData';
-import { useSectionReveal } from '../hooks/useSectionReveal';
+import { BAND_ASSETS, SOCIAL_LINKS } from '../../data/bandData';
+import { useSectionReveal } from '../../hooks/useSectionReveal';
 
 function PlatformIcon({ id, className = 'w-5 h-5' }: { id: string; className?: string }) {
   if (id === 'youtube') {

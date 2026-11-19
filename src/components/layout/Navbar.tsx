@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { BAND_ASSETS } from '../data/bandData';
+import { BAND_ASSETS } from '../../data/bandData';
 
 const NAV_ITEMS = [
   { id: 'home', label: 'HOME' },
@@ -47,17 +47,15 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'py-3 px-4 md:px-8' : 'py-5 px-4 md:px-10'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-3 px-4 md:px-8' : 'py-5 px-4 md:px-10'
+          }`}
       >
         <nav
           aria-label="Primary Navigation"
-          className={`mx-auto max-w-7xl flex items-center justify-between px-5 md:px-7 py-3 rounded-full transition-all duration-500 border ${
-            scrolled
+          className={`mx-auto max-w-7xl flex items-center justify-between px-5 md:px-7 py-3 rounded-full transition-all duration-500 border ${scrolled
               ? 'bg-[#17151B]/80 backdrop-blur-xl border-[#B49A82]/25 shadow-[0_12px_40px_rgba(0,0,0,0.45)]'
               : 'bg-[#17151B]/45 backdrop-blur-md border-[#B49A82]/15'
-          }`}
+            }`}
         >
           {/* Brand Logo */}
           <button
@@ -91,11 +89,10 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={() => scrollToSection(item.id)}
-                    className={`relative py-1.5 text-xs tracking-[0.24em] font-medium transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded ${
-                      isActive
+                    className={`relative py-1.5 text-xs tracking-[0.24em] font-medium transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded ${isActive
                         ? 'text-[#D8C9B8]'
                         : 'text-[#D8C9B8]/65 hover:text-[#B49A82]'
-                    }`}
+                      }`}
                   >
                     {item.label}
                     {isActive && (
@@ -152,11 +149,10 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={() => scrollToSection(item.id)}
-                    className={`font-[family-name:var(--font-serif-luxury)] text-3xl tracking-[0.18em] transition-colors ${
-                      activeSection === item.id
+                    className={`font-[family-name:var(--font-serif-luxury)] text-3xl tracking-[0.18em] transition-colors ${activeSection === item.id
                         ? 'text-[#B49A82]'
                         : 'text-[#D8C9B8] hover:text-[#B49A82]'
-                    }`}
+                      }`}
                   >
                     {item.label}
                   </button>

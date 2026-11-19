@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { BAND_ASSETS } from '../data/bandData';
+import { BAND_ASSETS } from '../../data/bandData';
 
 interface VinylStage3DProps {
   className?: string;

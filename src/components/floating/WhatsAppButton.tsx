@@ -1,4 +1,4 @@
-import { WHATSAPP_CONTACT } from '../data/bandData';
+import { WHATSAPP_CONTACT } from '../../data/bandData';
 
 export function WhatsAppButton() {
   const href = `https://wa.me/${WHATSAPP_CONTACT.phoneNumber}?text=${encodeURIComponent(WHATSAPP_CONTACT.message)}`;

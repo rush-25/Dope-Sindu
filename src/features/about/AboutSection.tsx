@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Disc3, Music2 } from 'lucide-react';
-import { ABOUT_HIGHLIGHTS, BAND_ASSETS, INSPIRED_ARTISTS } from '../data/bandData';
-import { useSectionReveal } from '../hooks/useSectionReveal';
+import { ABOUT_HIGHLIGHTS, BAND_ASSETS, INSPIRED_ARTISTS } from '../../data/bandData';
+import { useSectionReveal } from '../../hooks/useSectionReveal';
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);

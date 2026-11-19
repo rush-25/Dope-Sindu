@@ -1,17 +1,19 @@
 import { lazy, Suspense } from 'react';
-import { Navbar } from './components/Navbar';
-import { HeroSection } from './components/HeroSection';
-import { WhatsAppButton } from './components/WhatsAppButton';
-import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
+import { Navbar } from './components/layout/Navbar';
+import { HeroSection } from './features/home/HeroSection';
+import { WhatsAppButton } from './components/floating/WhatsAppButton';
+import { BackgroundMusicPlayer } from './components/floating/BackgroundMusicPlayer';
 
 const GallerySection = lazy(() =>
-  import('./components/GallerySection').then((m) => ({ default: m.GallerySection }))
+  import('./features/gallery/GallerySection').then((m) => ({ default: m.GallerySection }))
 );
 const AboutSection = lazy(() =>
-  import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
+  import('./features/about/AboutSection').then((m) => ({ default: m.AboutSection }))
 );
 const ContactFooterSection = lazy(() =>
-  import('./components/ContactFooterSection').then((m) => ({ default: m.ContactFooterSection }))
+  import('./features/contact/ContactFooterSection').then((m) => ({
+    default: m.ContactFooterSection,
+  }))
 );
 
 export default function App() {

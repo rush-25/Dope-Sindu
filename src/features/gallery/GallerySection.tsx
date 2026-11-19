@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
-import { GALLERY_PHOTOS, type GalleryPhoto } from '../data/bandData';
-import { useSectionReveal } from '../hooks/useSectionReveal';
+import { GALLERY_PHOTOS, type GalleryPhoto } from '../../data/bandData';
+import { useSectionReveal } from '../../hooks/useSectionReveal';
 
 interface TiltCardProps {
   photo: GalleryPhoto;
