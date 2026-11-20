@@ -13,7 +13,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
   const [webglSupported, setWebglSupported] = useState(true);
 
   const triggerSpin = () => {
-    spinBoostRef.current = Math.min(spinBoostRef.current + 12, 24);
+    spinBoostRef.current = Math.min(spinBoostRef.current + 7, 14);
     flipTargetRef.current += Math.PI * 2;
   };
 
@@ -236,6 +236,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
     let animationId = 0;
     let spinAngle = 0;
     let flipAngle = 0;
+    let smoothScroll = 0;
     const clock = new THREE.Clock();
 
     const animate = () => {
@@ -244,11 +245,11 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
       const elapsed = clock.elapsedTime;
 
       if (!prefersReducedMotion) {
-        // Decay click-triggered spin boost smoothly (turntable inertia)
-        spinBoostRef.current *= Math.pow(0.28, delta);
+        // Decay click-triggered spin boost smoothly (gentle turntable inertia)
+        spinBoostRef.current *= Math.pow(0.45, delta);
         if (spinBoostRef.current < 0.01) spinBoostRef.current = 0;
 
-        const angularSpeed = 0.45 + spinBoostRef.current;
+        const angularSpeed = 0.22 + spinBoostRef.current;
         spinAngle += angularSpeed * delta;
 
         // Smooth vinyl rotation
@@ -256,25 +257,29 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
         labelMesh.rotation.z = -spinAngle;
         labelBack.rotation.z = spinAngle;
 
-        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.05);
+        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.04);
         vinylGroup.scale.setScalar(scaleBoost);
 
         // Subtle floating bob
-        vinylGroup.position.y = Math.sin(elapsed * 0.9) * 0.04;
+        vinylGroup.position.y = Math.sin(elapsed * 0.45) * 0.04;
 
-        // Smooth mouse interpolation
-        mouse.x += (mouse.targetX - mouse.x) * 0.06;
-        mouse.y += (mouse.targetY - mouse.y) * 0.06;
+        // Frame-rate independent exponential damping (slower, weightier feel)
+        const pointerDamp = 1 - Math.exp(-3.0 * delta);
+        const flipDamp = 1 - Math.exp(-2.2 * delta);
+        mouse.x += (mouse.targetX - mouse.x) * pointerDamp;
+        mouse.y += (mouse.targetY - mouse.y) * pointerDamp;
+
+        const targetScroll = Math.min(window.scrollY / 900, 1);
+        smoothScroll += (targetScroll - smoothScroll) * pointerDamp;
 
         // Smooth 3D flip rotation on click
-        flipAngle += (flipTargetRef.current - flipAngle) * Math.min(1, delta * 5.5);
+        flipAngle += (flipTargetRef.current - flipAngle) * flipDamp;
 
-        const scrollFactor = Math.min(window.scrollY / 900, 1);
-        vinylGroup.rotation.x = mouse.y * 0.22 + scrollFactor * 0.25;
-        vinylGroup.rotation.y = flipAngle + mouse.x * 0.28 - scrollFactor * 0.2;
+        vinylGroup.rotation.x = mouse.y * 0.22 + smoothScroll * 0.25;
+        vinylGroup.rotation.y = flipAngle + mouse.x * 0.28 - smoothScroll * 0.2;
 
-        particles.rotation.y = elapsed * 0.03;
-        particles.position.y = Math.sin(elapsed * 0.4) * 0.12;
+        particles.rotation.y = elapsed * 0.015;
+        particles.position.y = Math.sin(elapsed * 0.25) * 0.12;
       }
 
       renderer.render(scene, camera);

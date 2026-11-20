@@ -88,7 +88,7 @@ export function ContactFooterSection() {
                   initial={{ opacity: 0, y: -10, height: 0 }}
                   animate={{ opacity: 1, y: 0, height: 'auto' }}
                   exit={{ opacity: 0, y: -10, height: 0 }}
-                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   className="overflow-hidden w-full max-w-xl mt-6"
                 >
                   <div className="p-6 rounded-2xl bg-[#17151B]/80 backdrop-blur-xl border border-[#B49A82]/30 text-left space-y-4">

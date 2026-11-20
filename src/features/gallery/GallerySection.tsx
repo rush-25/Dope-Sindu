@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
 import { GALLERY_PHOTOS, type GalleryPhoto } from '../../data/bandData';
 import { useSectionReveal } from '../../hooks/useSectionReveal';
@@ -12,24 +13,46 @@ interface TiltCardProps {
 
 function EditorialPhotoCard({ photo, index, onOpen }: TiltCardProps) {
   const cardRef = useRef<HTMLButtonElement>(null);
+  const quickTiltRef = useRef<{
+    rx: gsap.QuickToFunc;
+    ry: gsap.QuickToFunc;
+    y: gsap.QuickToFunc;
+  } | null>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.set(card, { transformPerspective: 1100 });
+    quickTiltRef.current = {
+      rx: gsap.quickTo(card, 'rotationX', { duration: 1.1, ease: 'power3.out' }),
+      ry: gsap.quickTo(card, 'rotationY', { duration: 1.1, ease: 'power3.out' }),
+      y: gsap.quickTo(card, 'y', { duration: 1.1, ease: 'power3.out' }),
+    };
+  }, []);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (window.innerWidth < 768) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const card = cardRef.current;
-    if (!card) return;
+    const tilt = quickTiltRef.current;
+    if (!card || !tilt) return;
 
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-    card.style.transform = `perspective(1100px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg) translateY(-4px)`;
+    tilt.rx(-y * 4.5);
+    tilt.ry(x * 4.5);
+    tilt.y(-4);
   };
 
   const handlePointerLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    const tilt = quickTiltRef.current;
+    if (!tilt) return;
+    tilt.rx(0);
+    tilt.ry(0);
+    tilt.y(0);
   };
 
   return (
@@ -39,7 +62,7 @@ function EditorialPhotoCard({ photo, index, onOpen }: TiltCardProps) {
       onClick={() => onOpen(index)}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className={`gallery-card group relative block w-full h-full text-left overflow-hidden rounded-2xl bg-[#29232B] border border-[#B49A82]/20 transition-all duration-500 ease-out hover:border-[#B49A82]/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer ${photo.layoutClass}`}
+      className={`gallery-card group relative block w-full h-full text-left overflow-hidden rounded-2xl bg-[#29232B] border border-[#B49A82]/20 transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#B49A82]/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] cursor-pointer ${photo.layoutClass}`}
       style={{ willChange: 'transform' }}
     >
       <div className={`relative w-full h-full overflow-hidden ${photo.aspectClass}`}>
@@ -48,7 +71,7 @@ function EditorialPhotoCard({ photo, index, onOpen }: TiltCardProps) {
           alt={photo.alt}
           loading={index < 2 ? 'eager' : 'lazy'}
           decoding="async"
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.06] filter saturate-[0.9] contrast-[1.03] group-hover:saturate-100"
+          className="w-full h-full object-cover object-center transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05] filter saturate-[0.9] contrast-[1.03] group-hover:saturate-100 will-change-transform"
         />
 
         {/* Dusty Rose & Midnight Plum Editorial Tint */}
@@ -176,7 +199,7 @@ export function GallerySection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             role="dialog"
             aria-modal="true"
             aria-label={activePhoto.title}
@@ -218,7 +241,7 @@ export function GallerySection() {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.22}

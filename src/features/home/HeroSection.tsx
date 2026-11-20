@@ -34,25 +34,26 @@ export function HeroSection() {
 
     const ctx = gsap.context(() => {
       gsap.from('.hero-stagger', {
-        y: 28,
+        y: 24,
         opacity: 0,
-        duration: 1.05,
-        stagger: 0.11,
-        ease: 'power3.out',
+        duration: 1.95,
+        stagger: 0.15,
+        ease: 'expo.out',
+        force3D: true,
         clearProps: 'transform',
       });
     }, heroRef);
 
+    const bgEl = bgImageRef.current;
+    const quickX = bgEl ? gsap.quickTo(bgEl, 'x', { duration: 2.4, ease: 'power3.out' }) : null;
+    const quickY = bgEl ? gsap.quickTo(bgEl, 'y', { duration: 2.4, ease: 'power3.out' }) : null;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!bgImageRef.current || window.innerWidth < 768) return;
+      if (!quickX || !quickY || window.innerWidth < 768) return;
       const x = (e.clientX / window.innerWidth - 0.5) * 18;
       const y = (e.clientY / window.innerHeight - 0.5) * 12;
-      gsap.to(bgImageRef.current, {
-        x: -x,
-        y: -y,
-        duration: 1.4,
-        ease: 'power2.out',
-      });
+      quickX(-x);
+      quickY(-y);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });

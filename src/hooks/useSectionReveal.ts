@@ -9,8 +9,7 @@ export interface RevealGroup {
 }
 
 /**
- * Reveals GSAP-animated elements when their container section enters (or is above) the viewport.
- * Falls back immediately to visible state when prefers-reduced-motion is enabled.
+ * Reveals GSAP-animated elements with smooth exponential easing when their container enters the viewport.
  */
 export function useSectionReveal(
   sectionRef: RefObject<HTMLElement | null>,
@@ -34,13 +33,14 @@ export function useSectionReveal(
         for (const group of groups) {
           gsap.fromTo(
             group.selector,
-            { y: group.y ?? 26, opacity: 0 },
+            { y: group.y ?? 22, opacity: 0 },
             {
               y: 0,
               opacity: 1,
-              duration: group.duration ?? 0.9,
-              stagger: group.stagger ?? 0.1,
-              ease: 'power3.out',
+              duration: (group.duration ?? 1.1) * 1.65,
+              stagger: (group.stagger ?? 0.1) * 1.4,
+              ease: 'expo.out',
+              force3D: true,
               clearProps: 'transform,opacity',
             }
           );
@@ -77,7 +77,6 @@ export function useSectionReveal(
       observer?.disconnect();
       ctx.revert();
     };
-    // groups is static per component call site
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionRef]);
 }
