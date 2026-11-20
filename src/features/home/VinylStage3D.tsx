@@ -13,8 +13,8 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
   const [webglSupported, setWebglSupported] = useState(true);
 
   const triggerSpin = () => {
-    spinBoostRef.current = Math.min(spinBoostRef.current + 4.5, 9);
-    flipTargetRef.current += Math.PI * 2;
+    spinBoostRef.current = Math.min(spinBoostRef.current + 26, 52);
+    flipTargetRef.current += Math.PI * 4;
   };
 
   useEffect(() => {
@@ -245,11 +245,11 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
       const elapsed = clock.elapsedTime;
 
       if (!prefersReducedMotion) {
-        // Decay click-triggered spin boost smoothly (gentle turntable inertia)
-        spinBoostRef.current *= Math.pow(0.55, delta);
+        // Decay click-triggered spin boost smoothly (fast turntable inertia)
+        spinBoostRef.current *= Math.pow(0.22, delta);
         if (spinBoostRef.current < 0.01) spinBoostRef.current = 0;
 
-        const angularSpeed = 0.12 + spinBoostRef.current;
+        const angularSpeed = 1.45 + spinBoostRef.current;
         spinAngle += angularSpeed * delta;
 
         // Smooth vinyl rotation
@@ -257,15 +257,15 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
         labelMesh.rotation.z = -spinAngle;
         labelBack.rotation.z = spinAngle;
 
-        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.03);
+        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.0025, 0.06);
         vinylGroup.scale.setScalar(scaleBoost);
 
         // Subtle floating bob
-        vinylGroup.position.y = Math.sin(elapsed * 0.28) * 0.035;
+        vinylGroup.position.y = Math.sin(elapsed * 1.1) * 0.04;
 
-        // Frame-rate independent exponential damping (very slow, graceful feel)
-        const pointerDamp = 1 - Math.exp(-1.8 * delta);
-        const flipDamp = 1 - Math.exp(-1.3 * delta);
+        // Responsive pointer tilt & fast 720° click flip
+        const pointerDamp = 1 - Math.exp(-8.5 * delta);
+        const flipDamp = 1 - Math.exp(-9.5 * delta);
         mouse.x += (mouse.targetX - mouse.x) * pointerDamp;
         mouse.y += (mouse.targetY - mouse.y) * pointerDamp;
 
