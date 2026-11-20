@@ -1,0 +1,21 @@
+{
+  "name": "Dope Sindu (ඩෝප් සිංදු) — Live Acoustic Band",
+  "short_name": "Dope Sindu",
+  "description": "Official website of Dope Sindu (ඩෝප් සිංදු), a Sri Lankan live acoustic collective from Chilaw bringing timeless golden oldies, Sri Lankan classics, and baila back to life.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#17151B",
+  "theme_color": "#17151B",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/og-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
+  <url>
+    <loc>https://dope-sindu.vercel.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-wide-stage.webp</image:loc>
+      <image:title>Dope Sindu — The Full Ensemble Live Acoustic Stage</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/portrait-vocalist.webp</image:loc>
+      <image:title>Dope Sindu — In Full Voice</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/portrait-rhythm.webp</image:loc>
+      <image:title>Dope Sindu — Rhythm &amp; Brotherhood</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-ensemble.webp</image:loc>
+      <image:title>Dope Sindu — Under the Marquee (ඩෝප් සිංදු Live)</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/acoustic-duo.webp</image:loc>
+      <image:title>Dope Sindu — Strings &amp; Harmony</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-toast.webp</image:loc>
+      <image:title>Dope Sindu — The Signature Toast</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-harmony.webp</image:loc>
+      <image:title>Dope Sindu — Golden Oldies Night</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-duet.webp</image:loc>
+      <image:title>Dope Sindu — Classic Baila Energy Live in Chilaw</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/vocalist-green-session.webp</image:loc>
+      <image:title>Dope Sindu — Soulful Delivery</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/full-band-marquee.webp</image:loc>
+      <image:title>Dope Sindu — Full Band Beneath the Marquee</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-quartet-groove.webp</image:loc>
+      <image:title>Dope Sindu — Accordion &amp; Pulse</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/bongo-percussion-solo.webp</image:loc>
+      <image:title>Dope Sindu — Hands on the Bongos</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/marquee-sign-closeup.webp</image:loc>
+      <image:title>ඩෝප් සිංදු Live — The Signature Stage Marquee</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/live-trio-harmony.webp</image:loc>
+      <image:title>Dope Sindu — Three-Part Harmony</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/lead-singer-spotlight.webp</image:loc>
+      <image:title>Dope Sindu — Center Stage</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://dope-sindu.vercel.app/images/dopesindu/monochrome-full-stage.webp</image:loc>
+      <image:title>Dope Sindu — Timeless Monochrome Live Collective</image:title>
+    </image:image>
+  </url>
+</urlset>

@@ -5,19 +5,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><!-- figma:title --></title>
+    <link rel="canonical" href="https://dope-sindu.vercel.app/" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" href="/og-icon.png" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta
       name="keywords"
-      content="Dope Sindu, ඩෝප් සිංදු, Sri Lankan acoustic band, Chilaw live band, Sri Lankan golden oldies, Baila music, live acoustic band Sri Lanka"
+      content="Dope Sindu, DopeSindu, ඩෝප් සිංදු, Dope Sindu Live, Dope Sindu Chilaw, Sri Lankan acoustic band, Chilaw live band, Sri Lankan golden oldies, Baila music, live acoustic band Sri Lanka, Sinhala acoustic songs, Sri Lankan live music collective, wedding and event band Sri Lanka"
     />
-    <meta name="author" content="Dope Sindu" />
+    <meta name="author" content="Dope Sindu (ඩෝප් සිංදු)" />
     <meta name="theme-color" content="#17151B" />
+    <meta name="geo.region" content="LK-62" />
+    <meta name="geo.placename" content="Chilaw, Sri Lanka" />
+    <meta name="geo.position" content="7.5758;79.7953" />
+    <meta name="ICBM" content="7.5758, 79.7953" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dope-sindu.vercel.app/" />
     <meta property="og:site_name" content="Dope Sindu | ඩෝප් සිංදු" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="si_LK" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="512" />
     <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Dope Sindu (ඩෝප් සිංදු) Official Band Logo" />
     <meta
       name="twitter:title"
       content="Dope Sindu (ඩෝප් සිංදු) — Live Acoustic Band | Chilaw, Sri Lanka"
@@ -29,21 +42,91 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "MusicGroup",
-        "name": "Dope Sindu",
-        "alternateName": "ඩෝප් සිංදු",
-        "description": "A Sri Lankan live acoustic collective from Chilaw bringing timeless Sri Lankan classics, golden oldies, and baila back to life with a fresh contemporary sound.",
-        "genre": ["Sri Lankan Classics", "Golden Oldies", "Baila", "Acoustic"],
-        "foundingLocation": {
-          "@type": "Place",
-          "name": "Chilaw, Sri Lanka"
-        },
-        "image": "/images/dopesindu/banner.webp",
-        "logo": "/images/dopesindu/logo.webp",
-        "sameAs": [
-          "https://www.youtube.com/@dopesindu",
-          "https://www.tiktok.com/@dopesindu",
-          "https://www.facebook.com/dopesindu/directory_contact_info"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://dope-sindu.vercel.app/#website",
+            "url": "https://dope-sindu.vercel.app/",
+            "name": "Dope Sindu",
+            "alternateName": "ඩෝප් සිංදු",
+            "description": "Official website of Dope Sindu (ඩෝප් සිංදු), a Sri Lankan live acoustic collective from Chilaw.",
+            "inLanguage": ["en", "si"],
+            "publisher": {
+              "@id": "https://dope-sindu.vercel.app/#musicgroup"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://dope-sindu.vercel.app/#webpage",
+            "url": "https://dope-sindu.vercel.app/",
+            "name": "Dope Sindu (ඩෝප් සිංදු) — Live Acoustic Band | Chilaw, Sri Lanka",
+            "isPartOf": {
+              "@id": "https://dope-sindu.vercel.app/#website"
+            },
+            "about": {
+              "@id": "https://dope-sindu.vercel.app/#musicgroup"
+            },
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://dope-sindu.vercel.app/images/dopesindu/live-wide-stage.webp"
+            },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "MusicGroup",
+            "@id": "https://dope-sindu.vercel.app/#musicgroup",
+            "name": "Dope Sindu",
+            "alternateName": ["ඩෝප් සිංදු", "Dope Sindu Live", "DopeSindu"],
+            "url": "https://dope-sindu.vercel.app/",
+            "description": "Dope Sindu (ඩෝප් සිංදු) is a Sri Lankan live acoustic collective from Chilaw bringing timeless Sri Lankan classics, golden oldies, and baila back to life with a fresh contemporary sound.",
+            "genre": [
+              "Sri Lankan Classics",
+              "Golden Oldies",
+              "Baila",
+              "Acoustic",
+              "Sinhala Live Music"
+            ],
+            "foundingLocation": {
+              "@type": "Place",
+              "name": "Chilaw, Sri Lanka",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Chilaw",
+                "addressRegion": "North Western Province",
+                "addressCountry": "LK"
+              }
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "Sri Lanka"
+            },
+            "image": [
+              "https://dope-sindu.vercel.app/images/dopesindu/live-wide-stage.webp",
+              "https://dope-sindu.vercel.app/images/dopesindu/full-band-marquee.webp",
+              "https://dope-sindu.vercel.app/images/dopesindu/live-ensemble.webp",
+              "https://dope-sindu.vercel.app/og-icon.png"
+            ],
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://dope-sindu.vercel.app/og-icon.png",
+              "width": 512,
+              "height": 512
+            },
+            "track": {
+              "@type": "MusicRecording",
+              "name": "Dope Sindu Live Acoustic Session",
+              "url": "https://dope-sindu.vercel.app/assets/music/background.mp3",
+              "inLanguage": "si",
+              "byArtist": {
+                "@id": "https://dope-sindu.vercel.app/#musicgroup"
+              }
+            },
+            "sameAs": [
+              "https://www.youtube.com/@dopesindu",
+              "https://www.tiktok.com/@dopesindu",
+              "https://www.facebook.com/dopesindu/directory_contact_info"
+            ]
+          }
         ]
       }
     </script>
@@ -56,6 +139,24 @@
   <body>
     <!-- figma:body-start -->
     <div id="root"></div>
+    <noscript>
+      <main>
+        <h1>Dope Sindu (ඩෝප් සිංදු) — Live Acoustic Collective from Chilaw, Sri Lanka</h1>
+        <p>
+          A fresh musical vibe by the new generation. Bringing timeless Sri Lankan classics,
+          golden oldies, and baila back to life with a fresh contemporary acoustic sound.
+        </p>
+        <p>
+          Inspired by legendary Sri Lankan artists including H.R. Jothipala, Nihal Nelson,
+          Priya Sooriyasena, Victor Rathnayaka, and C.T. Fernando.
+        </p>
+        <ul>
+          <li><a href="https://www.youtube.com/@dopesindu">Dope Sindu on YouTube</a></li>
+          <li><a href="https://www.tiktok.com/@dopesindu">Dope Sindu on TikTok</a></li>
+          <li><a href="https://www.facebook.com/dopesindu/directory_contact_info">Dope Sindu on Facebook</a></li>
+        </ul>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
     <!-- figma:body-end -->
   </body>
