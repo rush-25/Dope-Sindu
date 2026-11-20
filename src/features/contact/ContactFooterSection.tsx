@@ -133,14 +133,14 @@ export function ContactFooterSection() {
         </div>
 
         {/* Social Media Cards */}
-        <div className="contact-reveal mt-14 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+        <div className="mt-14 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {SOCIAL_LINKS.map((social) => (
             <a
               key={social.id}
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-6 sm:p-7 rounded-2xl bg-[#17151B]/65 backdrop-blur-md border border-[#B49A82]/20 hover:border-[#B49A82]/55 transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between min-h-[170px]"
+              className="contact-reveal group relative p-6 sm:p-7 rounded-2xl bg-[#17151B]/65 backdrop-blur-md border border-[#B49A82]/20 hover:border-[#B49A82]/55 transition-all duration-700 hover:-translate-y-1 flex flex-col justify-between min-h-[170px]"
             >
               <div className="flex items-center justify-between">
                 <div className="w-11 h-11 rounded-full bg-[#29232B] border border-[#B49A82]/30 flex items-center justify-center text-[#B49A82] group-hover:bg-[#B49A82] group-hover:text-[#17151B] transition-colors duration-300">

@@ -34,32 +34,39 @@ export function HeroSection() {
 
     const ctx = gsap.context(() => {
       gsap.from('.hero-stagger', {
-        y: 24,
+        y: 26,
         opacity: 0,
-        duration: 1.95,
-        stagger: 0.15,
-        ease: 'expo.out',
+        duration: 2.6,
+        stagger: 0.22,
+        ease: 'power2.out',
         force3D: true,
         clearProps: 'transform',
       });
     }, heroRef);
 
     const bgEl = bgImageRef.current;
-    const quickX = bgEl ? gsap.quickTo(bgEl, 'x', { duration: 2.4, ease: 'power3.out' }) : null;
-    const quickY = bgEl ? gsap.quickTo(bgEl, 'y', { duration: 2.4, ease: 'power3.out' }) : null;
+    const quickX = bgEl ? gsap.quickTo(bgEl, 'x', { duration: 3.2, ease: 'power2.out' }) : null;
+    const quickY = bgEl ? gsap.quickTo(bgEl, 'y', { duration: 3.2, ease: 'power2.out' }) : null;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!quickX || !quickY || window.innerWidth < 768) return;
       const x = (e.clientX / window.innerWidth - 0.5) * 18;
       const y = (e.clientY / window.innerHeight - 0.5) * 12;
       quickX(-x);
-      quickY(-y);
+      quickY(-y + Math.min(window.scrollY * 0.22, 160));
+    };
+
+    const handleScroll = () => {
+      if (!quickY) return;
+      quickY(Math.min(window.scrollY * 0.22, 160));
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       ctx.revert();
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

@@ -28,7 +28,7 @@ export function Navbar() {
 
       // Direct DOM transforms for 60-120fps scroll-driven logo rotation & progress bar
       if (logoWheelRef.current) {
-        logoWheelRef.current.style.transform = `rotate(${(y * 0.14).toFixed(1)}deg)`;
+        logoWheelRef.current.style.transform = `rotate(${(y * 0.07).toFixed(1)}deg)`;
       }
       if (progressBarRef.current) {
         const maxScroll = Math.max(
@@ -78,14 +78,14 @@ export function Navbar() {
       <motion.header
         initial={{ y: -36, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
           scrolled ? 'py-2.5 px-4 md:px-8' : 'py-5 px-4 md:px-10'
         }`}
       >
         <nav
           aria-label="Primary Navigation"
-          className={`relative overflow-hidden mx-auto flex items-center justify-between rounded-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] border ${
+          className={`relative overflow-hidden mx-auto flex items-center justify-between rounded-full transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] border ${
             scrolled
               ? 'max-w-5xl px-4 md:px-6 py-2.5 bg-[#17151B]/85 backdrop-blur-xl border-[#B49A82]/35 shadow-[0_18px_50px_rgba(0,0,0,0.55)]'
               : 'max-w-7xl px-5 md:px-7 py-3 bg-[#17151B]/45 backdrop-blur-md border-[#B49A82]/15'
@@ -142,16 +142,16 @@ export function Navbar() {
                   initial={{ opacity: 0, y: -12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 1.1,
-                    delay: 0.25 + idx * 0.1,
-                    ease: [0.16, 1, 0.3, 1],
+                    duration: 1.8,
+                    delay: 0.3 + idx * 0.16,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                 >
                   <button
                     type="button"
                     onClick={() => scrollToSection(item.id)}
                     onMouseEnter={() => setHoveredItem(item.id)}
-                    className={`relative px-4 py-2 text-xs tracking-[0.24em] font-medium transition-colors duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded-full cursor-pointer ${
+                    className={`relative px-4 py-2 text-xs tracking-[0.24em] font-medium transition-colors duration-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B49A82] rounded-full cursor-pointer ${
                       isActive
                         ? 'text-[#D8C9B8]'
                         : 'text-[#D8C9B8]/65 hover:text-[#D8C9B8]'
@@ -160,14 +160,14 @@ export function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-active-pill"
-                        transition={{ type: 'spring', stiffness: 130, damping: 24 }}
+                        transition={{ type: 'spring', stiffness: 75, damping: 20 }}
                         className="absolute inset-0 rounded-full bg-[#B49A82]/12 border border-[#B49A82]/30"
                       />
                     )}
                     {isHovered && !isActive && (
                       <motion.span
                         layoutId="nav-hover-pill"
-                        transition={{ type: 'spring', stiffness: 150, damping: 24 }}
+                        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
                         className="absolute inset-0 rounded-full bg-[#D8C9B8]/6"
                       />
                     )}
@@ -175,7 +175,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-active-underline"
-                        transition={{ type: 'spring', stiffness: 130, damping: 24 }}
+                        transition={{ type: 'spring', stiffness: 75, damping: 20 }}
                         className="absolute left-3 right-3 bottom-1 h-[1px] bg-gradient-to-r from-transparent via-[#B49A82] to-transparent"
                       />
                     )}

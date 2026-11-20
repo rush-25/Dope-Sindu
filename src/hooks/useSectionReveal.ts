@@ -9,7 +9,8 @@ export interface RevealGroup {
 }
 
 /**
- * Reveals GSAP-animated elements with smooth exponential easing when their container enters the viewport.
+ * Observes each individual matched element inside sectionRef so every row, card, and heading
+ * animates smoothly into view as you scroll down the page (and replays when scrolled back down).
  */
 export function useSectionReveal(
   sectionRef: RefObject<HTMLElement | null>,
@@ -22,60 +23,75 @@ export function useSectionReveal(
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    let hasAnimated = false;
-    let observer: IntersectionObserver | null = null;
+    const elementConfig = new Map<
+      HTMLElement,
+      { y: number; duration: number; stagger: number; revealed: boolean }
+    >();
 
-    const ctx = gsap.context(() => {
-      const reveal = () => {
-        if (hasAnimated) return;
-        hasAnimated = true;
+    for (const group of groups) {
+      const nodes = sectionEl.querySelectorAll<HTMLElement>(group.selector);
+      const yOffset = (group.y ?? 28) * 1.15;
+      const dur = (group.duration ?? 1.0) * 2.5;
+      const stag = (group.stagger ?? 0.1) * 2.2;
 
-        for (const group of groups) {
-          gsap.fromTo(
-            group.selector,
-            { y: group.y ?? 22, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: (group.duration ?? 1.1) * 1.65,
-              stagger: (group.stagger ?? 0.1) * 1.4,
-              ease: 'expo.out',
-              force3D: true,
-              clearProps: 'transform,opacity',
-            }
-          );
+      nodes.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const alreadyAboveOrVisible = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+        elementConfig.set(el, {
+          y: yOffset,
+          duration: dur,
+          stagger: stag,
+          revealed: alreadyAboveOrVisible,
+        });
+
+        if (!alreadyAboveOrVisible && rect.top >= window.innerHeight * 0.92) {
+          gsap.set(el, { opacity: 0, y: yOffset, scale: 0.97 });
         }
-      };
+      });
+    }
 
-      if (sectionEl.getBoundingClientRect().top < window.innerHeight * 0.95) {
-        reveal();
-        return;
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let batchIndex = 0;
 
-      gsap.set(
-        groups.map((g) => g.selector).join(', '),
-        { opacity: 0 }
-      );
+        for (const entry of entries) {
+          const el = entry.target as HTMLElement;
+          const cfg = elementConfig.get(el);
+          if (!cfg) continue;
 
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) {
-              reveal();
-              observer?.disconnect();
-              break;
+          if (entry.isIntersecting) {
+            if (!cfg.revealed) {
+              cfg.revealed = true;
+              const delay = Math.min(batchIndex * cfg.stagger, 0.9);
+              batchIndex++;
+
+              gsap.to(el, {
+                y: 0,
+                scale: 1,
+                opacity: 1,
+                duration: cfg.duration,
+                delay,
+                ease: 'power2.out',
+                force3D: true,
+                overwrite: 'auto',
+                clearProps: 'transform,opacity',
+              });
             }
+          } else if (entry.boundingClientRect.top > window.innerHeight * 0.98) {
+            // Reset when scrolled back above the element so scrolling down replays the reveal
+            cfg.revealed = false;
+            gsap.set(el, { opacity: 0, y: cfg.y, scale: 0.97, overwrite: 'auto' });
           }
-        },
-        { threshold: 0.02 }
-      );
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
+    );
 
-      observer.observe(sectionEl);
-    }, sectionRef);
+    elementConfig.forEach((_, el) => observer.observe(el));
 
     return () => {
-      observer?.disconnect();
-      ctx.revert();
+      observer.disconnect();
+      elementConfig.forEach((_, el) => gsap.set(el, { clearProps: 'transform,opacity' }));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionRef]);

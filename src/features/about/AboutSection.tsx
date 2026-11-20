@@ -1,14 +1,44 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Disc3, Music2 } from 'lucide-react';
 import { ABOUT_HIGHLIGHTS, BAND_ASSETS, INSPIRED_ARTISTS } from '../../data/bandData';
 import { useSectionReveal } from '../../hooks/useSectionReveal';
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const floatCardRef = useRef<HTMLDivElement>(null);
 
   useSectionReveal(sectionRef, [
-    { selector: '.about-reveal', y: 28, duration: 0.9, stagger: 0.1 },
+    { selector: '.about-reveal', y: 30, duration: 0.95, stagger: 0.1 },
   ]);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let rafId = 0;
+
+    const updateParallax = () => {
+      rafId = 0;
+      const section = sectionRef.current;
+      const card = floatCardRef.current;
+      if (!section || !card) return;
+
+      const rect = section.getBoundingClientRect();
+      const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      const clamped = Math.max(0, Math.min(1, progress));
+      const offset = (0.5 - clamped) * 34;
+      card.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+    };
+
+    const onScroll = () => {
+      if (rafId === 0) rafId = requestAnimationFrame(updateParallax);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateParallax();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId !== 0) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
     <section
@@ -73,7 +103,10 @@ export function AboutSection() {
           </div>
 
           {/* Secondary Floating Acoustic Card */}
-          <div className="hidden md:block relative z-20 -mt-14 ml-auto mr-6 w-64 rounded-xl overflow-hidden border border-[#B49A82]/35 bg-[#17151B] p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.55)]">
+          <div
+            ref={floatCardRef}
+            className="hidden md:block relative z-20 -mt-14 ml-auto mr-6 w-64 rounded-xl overflow-hidden border border-[#B49A82]/35 bg-[#17151B] p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] transition-transform duration-300 ease-out will-change-transform"
+          >
             <div className="aspect-[16/10] overflow-hidden rounded-lg">
               <img
                 src={BAND_ASSETS.aboutSecondary}
@@ -134,11 +167,11 @@ export function AboutSection() {
           </div>
 
           {/* Three Highlight Elements */}
-          <div className="about-reveal mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             {ABOUT_HIGHLIGHTS.map((item) => (
               <div
                 key={item.title}
-                className="group p-4 rounded-xl bg-[#17151B]/60 border border-[#B49A82]/20 hover:border-[#B49A82]/50 transition-colors duration-300"
+                className="about-reveal group p-4 rounded-xl bg-[#17151B]/60 border border-[#B49A82]/20 hover:border-[#B49A82]/50 transition-colors duration-500"
               >
                 <div className="flex items-center gap-2 mb-1.5">
                   <Disc3 className="w-3.5 h-3.5 text-[#B49A82]" />

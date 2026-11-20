@@ -13,7 +13,7 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
   const [webglSupported, setWebglSupported] = useState(true);
 
   const triggerSpin = () => {
-    spinBoostRef.current = Math.min(spinBoostRef.current + 7, 14);
+    spinBoostRef.current = Math.min(spinBoostRef.current + 4.5, 9);
     flipTargetRef.current += Math.PI * 2;
   };
 
@@ -246,10 +246,10 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
 
       if (!prefersReducedMotion) {
         // Decay click-triggered spin boost smoothly (gentle turntable inertia)
-        spinBoostRef.current *= Math.pow(0.45, delta);
+        spinBoostRef.current *= Math.pow(0.55, delta);
         if (spinBoostRef.current < 0.01) spinBoostRef.current = 0;
 
-        const angularSpeed = 0.22 + spinBoostRef.current;
+        const angularSpeed = 0.12 + spinBoostRef.current;
         spinAngle += angularSpeed * delta;
 
         // Smooth vinyl rotation
@@ -257,15 +257,15 @@ export function VinylStage3D({ className = '' }: VinylStage3DProps) {
         labelMesh.rotation.z = -spinAngle;
         labelBack.rotation.z = spinAngle;
 
-        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.04);
+        const scaleBoost = 1 + Math.min(spinBoostRef.current * 0.003, 0.03);
         vinylGroup.scale.setScalar(scaleBoost);
 
         // Subtle floating bob
-        vinylGroup.position.y = Math.sin(elapsed * 0.45) * 0.04;
+        vinylGroup.position.y = Math.sin(elapsed * 0.28) * 0.035;
 
-        // Frame-rate independent exponential damping (slower, weightier feel)
-        const pointerDamp = 1 - Math.exp(-3.0 * delta);
-        const flipDamp = 1 - Math.exp(-2.2 * delta);
+        // Frame-rate independent exponential damping (very slow, graceful feel)
+        const pointerDamp = 1 - Math.exp(-1.8 * delta);
+        const flipDamp = 1 - Math.exp(-1.3 * delta);
         mouse.x += (mouse.targetX - mouse.x) * pointerDamp;
         mouse.y += (mouse.targetY - mouse.y) * pointerDamp;
 
